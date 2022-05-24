@@ -368,6 +368,82 @@ testuser@ubuntu1:~$
 
 
 ---
+
+## Linux kill 명령어
+
+### kill 명령어란?
+프로세스에 특정한 signal을 보내는 명령어
+일반적으로 종료되지 않는 프로세스를 종료 시킬 때 많이 사용한다. 리눅스에서 작업을 할 때 응용프로그램이나 프로세스가 멈추는 것을 볼 수 있습니다. 이 때의 유일한 해결책은 그 프로세스를 종료하는 것입니다. 리눅스는 이러한 시나리오에서 사용할 수 있는 kill 유틸리티를 제공합니다.
+
+
+### 프로세스 죽이는 방법 및 사용 예
+
+kill 명령어는 대개 프로세스를 죽일 때 사용합니다. 하지만 내부적으로는 프로세스에 시그널을 보내 원하는 작업을 하게 하는 명령어입니다. 이 툴을 사용하려면 다음 구문을 사용합니다.
+
+```
+kill [옵션 or 시그널(번호 또는 이름)] PID
+$ kill -9 1234
+$ kill -SIGKILL 1234
+```
+
+예를들어 node.js로 실행 중인 서버를 죽이고 싶다면 ps 명령어를 통해 node.js의 pid를 얻고 kill 명령어의 파라미터로 넘겨 실행시키면 종료시킬 수 있습니다.
+
+![image](https://user-images.githubusercontent.com/44454495/170103949-5776ddb4-50d6-4751-b1b7-bd75ab6cd3fd.png)
+
+
+### 사용자 지정 시그널 전송 방법
+kill 명령어의 default 시그널은 TERM(15) 입니다. 하지만 -s 명령으로 다른 시그널을 보낼 수 있습니다.
+
+```$ kill -s [signal] [pid]```
+
+예를 들어 프로세스가 TERM(15) 시그널에 응답하지 않으면 다음의 명령어 처럼 KILL(9)를 사용해 강제로 죽일 수 있습니다.
+
+```$ kill -s KILL [pid]```
+
+### 사용 가능한 시그널의 목록
+-l (List의 엘) 명령어를 통해 지원하는 시그널의 목록을 확인할 수 있습니다.
+
+### 옵션
+-l : signal 의 종류를 출력한다.
+``` $ kill -l ```
+
+![image](https://user-images.githubusercontent.com/44454495/170104083-a5a20bf5-5b1d-4bf1-b2a1-11e42b5d2cef.png)
+
+
+### Signal 의 종료
+1) SIGHUP : 연결 끊기. 프로세스의 설정파일을 다시 읽음
+2) SIGINT : 인터럽트
+3) SIGQUIT : 종료
+4) SIGILL : 잘못된 명령
+5) SIGTRAP : 트렙 추적
+6) SIGABRT
+7) SIGBUS : 버스 에러
+8) SIGFPE : 고정 소수점 예외
+9) SIGKILL : 죽이기
+10) SIGUSR1
+11) SIGSEGV : 세그멘테이션 위반
+12) SIGUSR2     
+13) SIGPIPE : 읽을 것이 없는 파이프에 대한 시그널
+14) SIGALRM : 경고 클럭
+15) SIGTERM : 소프트웨어 종료 시그널
+16) SIGSTKFLT : 프로세서 스택 실패
+17) SIGCHLD : 자식 프로세서의 상태변화
+18) SIGCONT : STOP 시그널 이후 계속 진행할 때 사용
+19) SIGSTOP : 정지
+20) SIGTSTP : 키보드에 의해 발생하는 시그널
+21) SIGTTIN      
+22) SIGTTOU     
+23) SIGURG      
+24) SIGXCPU     
+25) SIGXFSZ
+26) SIGVTALRM  
+27) SIGPROF     
+28) SIGWINCH   
+29) SIGIO         
+30) SIGPWR
+31) SIGSYS
+
+
 ---
 ---
 안녕하세요 이것은 과제를 제출하기 위한 read.md 파일입니다.
