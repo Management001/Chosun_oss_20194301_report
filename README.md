@@ -149,15 +149,149 @@ top는 기본적으로 프로세스를 기본으로하여 정보를 보여줍니
 
 프로세스가 너무 많다면 필터링 기능또한 제공해주고 있습니다. 해당 기능을 사용하기 위해서는 o 또는 O를 누르시면 됩니다. 필터는 COMMAND, %CPU 등등 다양한 방법으로 가능합니다.
 
-COMMAND에 JAVA가 포함되는 프로세스만 확인
-![image](https://user-images.githubusercontent.com/44454495/170070362-9c1eb6e0-5711-4465-bf32-ccceb4454ae8.png)
+> COMMAND에 JAVA가 포함되는 프로세스만 확인
+> ![image](https://user-images.githubusercontent.com/44454495/170070362-9c1eb6e0-5711-4465-bf32-ccceb4454ae8.png)
 
 
-%MEM값이 3% 이상인 프로세스만 확인
-![image](https://user-images.githubusercontent.com/44454495/170070434-8cf4a177-38ae-443b-ba54-b4881f6b834c.png)
+> %MEM값이 3% 이상인 프로세스만 확인
+> ![image](https://user-images.githubusercontent.com/44454495/170070434-8cf4a177-38ae-443b-ba54-b4881f6b834c.png)
 
 
 ---
+
+## Linux ps 명령어
+
+### ps 명령어란?
+
+ps는 Process Status의 줄인말로 현재 실행중인 프로세스 목록과 상태를 보여줍니다.
+
+여러분들이 컴퓨터를 사용할때 가장 많이 사용하는 명령이 있습니다. 그 중 한가지 경우가 프로세스에 대한 정보를 알고 싶을 경우인데요. 예를 들어 어떤 프로세스가 수행중인데, 이 프로세스가 CPU를 굉장히 많이 소모시킨다고 합니다. kill 명령으로 그 프로세스를 종료시키고 싶지만 pid를 알아야하겠죠. 이때 pid등의 정보를 볼 수 있는 명령이 있습니다. 그 process의 상태를 알고 싶을때 매우 많이 사용하는 명령이 바로 ps입니다.
+
+ps는 프로세스에 대한 많은 정보를 담고 있고 매우 많이 사용되는 명령으로 옵션이 매우 다양합니다. ps는 옵션에는 세가지 종류가 있습니다.
+1) Unix Option : 앞에 '-' (dash)가 붙는 옵션 표기방법입니다. 
+2) BSD Option : '-' 를 붙이지 않습니다.
+3) GNU Option : 명령어 앞에 '--' (double dash)를 붙입니다.
+물론 Unix, BSD, GNU 옵션들을 모두 우리가 알 수도 없고, 외울 수도 없지만 그래도 유용한 옵션정도는 알고 있어야겠죠? 
+
+
+### ps 사용법
+
+```
+ps
+```
+
+### 기본 ps 명령어 구성
+
+ps 명령어를 치면 아래와 같이 나오게 됩니다.  별로 몇개 나오지 않는 다는 것을 알 수 있는데, 이것은 ps가 기본적으로 같은 EUID(Effective User ID)의 프로세스이며 같은 터미널의 프로세스만을 골라서 보여주기 때문입니다. 
+보여주는 정보는 프로세스 ID(PID), 터미널(TTY), CPU 점유 시간(TIME), 그리고 프로세스가 수행된 명령어(CMD)입니다. 여기서 a.out은 제가 임의로 무한 루프를 돌린 프로세스를 실행시켜서 그렇고 시간은 TIME이 00:04:31인것을 볼 수 있네요.
+
+![image](https://user-images.githubusercontent.com/44454495/170078400-4ff7a571-3d79-440a-94ab-9fadb1b72d60.png)
+
++ ps -e, -A : 모든 프로세스를 보여줍니다. 
++ ps -a : 세션 리더와 터미널과 연관된 프로세스들을 제외한 모든 프로세스를 보여줍니다.
++ ps -d : 세션 리더를 제외한 모든 프로세스를 보여줍니다.
++ ps -f : full format으로 세션의 정보를 표시합니다. 
++ ps -ef : -e와 -f의 옵션 조합인데, 모든 프로세스를 full format으로 보여줍니다.
+
+아래는 그 결과를 보여줍니다. UID, PID, PPID, C, STIME, TTY, TIME, CMD의 정보를 볼 수 있네요. TTY(연결 터미널)가 없으면 대부분 데몬 혹은 커널 프로세스입니다. 
+
+> ps -ef 결과1
+> ![image](https://user-images.githubusercontent.com/44454495/170078448-40546aa1-8622-4518-ab48-c1232e8259ef.png)
+
+> ps -ef 결과 2
+> ![image](https://user-images.githubusercontent.com/44454495/170078462-71c51f54-e54d-44b1-a59d-47f66a3c2e30.png)
+
+
++ ps -u userlist : EUID 혹은 유저 이름으로 프로세스를 고릅니다. 이때 여러 uid를 줄수 있는데 ','(comma)로 구분하여 명시해줍니다. euid는 프로세스가 수행할때 갖는 유저 권한을 말합니다.
++ ps -U userlist : -u 옵션과는 동일하나 RUID가 갖는 프로세스만을 찾아냅니다. ruid는 real user id라는 것으로 실제 프로그램을 실행한 uid를 의미합니다. 이때도 쉼표로 여러 uid를 지정할 수 있습니다.
++ ps -p pidlist : 프로세스 id가 일치하는 프로세스를 출력합니다. 여러 pid들을 뽑아내고 싶다면 마찬가지로 ','(comma)로 pid를 구분하여 명시해줄 수 있습니다. 이 명령은 ps --pid pidlist와 같습니다.
++ ps --ppid pidlist : 부모 프로세스 id와 일치하는 프로세스를 출력합니다. 역시 여러 ppid를 ','(comma)로 구분가능합니다.
++ ps -t ttylist : tty와 일치하는 프로세스들을 출력해줍니다. 이 명령은 t 혹은 --tty 옵션과 같습니다. 
++ ps -o format : 사용자가 지정한 format대로 출력합니다. format에 대해서는 설명이 길지만 간략하게 원하는 column만 보여준다고 기억하시면 됩니다. 예를 들어 사용자가 임의로 pid, ppid, cmd, uid 등을 표시할 수 있습니다.
+
+다음의 표는 format에 대해 정리한 표입니다.
+
+|CODE|NORMAL|HEADER|
+|---|---|---|
+|%C|pcpu|%CPU|
+|%G|group|GROUP|
+|%P|ppid|PPID|
+|%U|user|USER|
+|%a|args|COMMAND|
+|%c|comm|COMMAND|
+|%g|rgroup|RGROUP|
+|%n|nice|NI|
+|%p|pid|PID|
+|%r|pgid|PGID|
+|%t|etime|ELAPSED|
+|%u|ruser|RUSER|
+|%x|time|TIME|
+|%y|tty|TTY|
+|%z|vsz|VSZ|
+
+아래의 예는 uid가 0, 1000인 프로세스를 출력하는데, uid, ruid, euid, guid, pid, ppid, cmd를 출력해줍니다.
+
+> ps -u userlist -o format
+> ![image](https://user-images.githubusercontent.com/44454495/170079565-c73250a7-6a28-4b06-baa5-09820f02e350.png)
+
+ps aux : BSD 문법으로 실행중인 모든 프로세스를 나타냅니다. ps -aux와는 다른 옵션입니다. 
+
+> ps aux
+> ![image](https://user-images.githubusercontent.com/44454495/170079625-94d43f8b-e85e-4361-a792-9da3f22796ef.png)
+
+
+위의 보이는 것 중에 프로세스의 상태를 나타내는 STAT 혹은 S는 아래의 코드로 구성됩니다. 다른건 필요없고 Z나 <defunct>로 표시된 프로세스는 좀비 프로세스로 자원을 점유하므로 시스템 관리가 필요합니다. 반드시 없애야합니다.
+
+|Code	|Desc|
+|---|---|
+|D	|Uninterruptible sleep|
+|Idle	|Idle kernel thread|
+|R	|Running or runnable|
+|S	|Interruptible sleep|
+|T	|stopped by job control signal|
+|t	|stopped by debugger during tracing|
+|W	|paging|
+|X	|dead|
+|Z	|defuct (zombie) process|
+
+
+BSD format에서는 추가 문자가 쓰일 수 있습니다.
+
+|Character|	Desc|
+|---|---|
+|<	|high-priority(not nice to other users)|
+|N	|low-priority(nice to other users)|
+|L	|has pages locked into memory|
+|s	|is a session leader|
+|l	|is multi-threaded|
+|+	|is in the foreground process group|
+
+ps | grep - 원하는 프로세스만 추출
+
+대개 ps명령은 많은 결과를 출력하는데 이때 grep을 이용하여 원하는 프로세스를 찾을 수 있습니다. 예를 들면 sshd와 관련된 프로세스를 찾기를 원하면 이렇게 사용할 수 있습니다.
+
+> ps -ef | grep sshd
+> ![image](https://user-images.githubusercontent.com/44454495/170079891-40bc93d5-56ee-4478-af1e-5654e5f14c10.png)
+
+
+ps -ejH
+프로세스를 트리 형태로 조금 보기 좋게 표시하고 싶다면 -ejH옵션을 사용하면 됩니다. 자식 트리면 CMD가 한칸 띄어져서 출력이 됩니다.
+
+> ps -ejH 1
+> ![image](https://user-images.githubusercontent.com/44454495/170079907-be967053-139e-4c9e-bed7-4d0b1e1311ce.png)
+  
+> ps -ejH 2
+> ![image](https://user-images.githubusercontent.com/44454495/170080078-b7458d0c-b865-4eaa-826a-26ecbd0e0068.png)
+
+사실 트리모양으로 보기 좋게 출력하고 싶다면 아래의 pstree 명령이 더 보기 좋습니다.
+
+pstree
+여러분이 트리 형식으로 실행중인 프로세스를 보고 싶으시면 pstree 명령을 사용하시면 됩니다. 이 트리는 기본적으로 init 혹은 systemd 프로세스가 루트인데, 만약 pid를 명시한다면 그 pid가 루트가 됩니다. 
+
+> pstree
+> ![image](https://user-images.githubusercontent.com/44454495/170080171-04c1226f-e415-417a-bc79-310203b808c3.png)
+
+
 
 안녕하세요 이것은 과제를 제출하기 위한 read.md 파일입니다.
 
