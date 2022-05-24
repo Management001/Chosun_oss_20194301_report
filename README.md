@@ -377,7 +377,7 @@ $ kill -SIGKILL 1234
 
 예를들어 node.js로 실행 중인 서버를 죽이고 싶다면 ps 명령어를 통해 node.js의 pid를 얻고 kill 명령어의 파라미터로 넘겨 실행시키면 종료시킬 수 있습니다.
 
-![image](https://user-images.githubusercontent.com/44454495/170103949-5776ddb4-50d6-4751-b1b7-bd75ab6cd3fd.png)
+> ![image](https://user-images.githubusercontent.com/44454495/170103949-5776ddb4-50d6-4751-b1b7-bd75ab6cd3fd.png)
 
 
 ### 사용자 지정 시그널 전송 방법
@@ -397,7 +397,7 @@ kill 명령어의 default 시그널은 TERM(15) 입니다. 하지만 -s 명령�
 
 ``` $ kill -l ```
 
-![image](https://user-images.githubusercontent.com/44454495/170104083-a5a20bf5-5b1d-4bf1-b2a1-11e42b5d2cef.png)
+> ![image](https://user-images.githubusercontent.com/44454495/170104083-a5a20bf5-5b1d-4bf1-b2a1-11e42b5d2cef.png)
 
 
 ### Signal 의 종료
