@@ -295,9 +295,78 @@ ps 명령어를 치면 아래와 같이 나오게 됩니다.  별로 몇개 나�
 > 
 > ![image](https://user-images.githubusercontent.com/44454495/170080171-04c1226f-e415-417a-bc79-310203b808c3.png)
 
-
-
 ---
+
+## Linux jobs 명령어
+
+### jobs 명령어란?
+
+리눅스 명령어 jobs는 작업이 중지된 상태, 백그라운드로 진행 중인 작업 상태, 변경 되었지만 보고되지 않은 상태 등을 표시하는 명령어다.
+
++ 백그라운드로 실행되는 작업목록(작업번호, 상태, 명령어)을 보여주는 리눅스 명령어
++ 여기서 작업번호는 PID와는 달리, 별도로 부여되는 백그라운드 작업목록 상의 번호이다.
++ 작업목록은 현재 쉘 세션에 딸린 것이며, 다른 세션과는 독립적이다.
++ 현재 쉘 프로세스(bash)의 자식 백그라운드 프로세스들을 보여준다고 할 수 있다.
++ 리눅스 kill 명령어 뒤에 %작업번호를 입력하여 종료시킬 수 있다.
+
+### 사용법
+
+```
+jobs [option]
+```
+
+### jobs로 알 수 있는 세션의 상태 값
+
+| 상태	| 설명|
+| Running	| 작업이 일시 중단되지 않았고 종료하지 않고 계속 진행 중임|
+| Done	| 작업이 완료되어 0을 반환하고 종료 했음을 의미|
+| Done(code)	| 작업이 정삭적으로 완료되었으며, 0이 아닌 코드를 반환 했음을 의미|
+| Stopped	| 작업이 일시 중단|
+ |Stopped(SIGTSTP)	| SIGTSTP 신호가 작업을 일시 중단|
+| Stopped(SIGSTOP)	| SIGSTOP 신호가 작업을 일시 중단|
+| Stopped(SIGTTIN)	| SIGTTIN 신호가 작업을 일시 중단|
+| Stopped(SIGTTOU)	| SIGTTOU 신호가 작업을 일시 중단|
+
+
+### 옵션
+
+ |옵션	| 설명|
+| -l	| 프로세스 그룹 ID를 state 필드 앞에 출력|
+| -n	| 프로세스 그룹 중에 대표 프로세스 ID를 출력|
+| -p	| 각 프로세스 ID에 대해 한 행씩 출력|
+| command	| 지정한 명령어를 실행|
+
+
+### 사용
+
+```
+testuser@ubuntu1:~$ sleep 300 &
+[1] 30335
+testuser@ubuntu1:~$ sleep 400 &
+[2] 30336
+testuser@ubuntu1:~$ sleep 500 &
+[3] 30337
+testuser@ubuntu1:~$ jobs
+[1]   Running                 sleep 300 &
+[2]-  Running                 sleep 400 &
+[3]+  Running                 sleep 500 &
+testuser@ubuntu1:~$ kill %2
+testuser@ubuntu1:~$ 
+[2]-  Terminated              sleep 400
+testuser@ubuntu1:~$ jobs
+[1]-  Running                 sleep 300 &
+[3]+  Running                 sleep 500 &
+testuser@ubuntu1:~$ kill %1 %3
+testuser@ubuntu1:~$ 
+[1]-  Terminated              sleep 300
+[3]+  Terminated              sleep 500
+testuser@ubuntu1:~$ jobs
+testuser@ubuntu1:~$
+```
+
+
+
+
 ---
 ---
 ---
