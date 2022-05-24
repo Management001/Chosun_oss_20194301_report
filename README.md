@@ -31,6 +31,7 @@ root#> top
 ### 요약 영역
 
 요약 영역은 top에서 상단에 위치하고 있습니다. 이 요약영역은 전체 프로세스가 OS에 대해서 리소스를 어느정도 차지하고 있는지를 알려줍니다. 요약 영역에 나타나는 대표적인 값은 시간, 유저, 로드 에버리지(Load Average), 테스크(Tasks), CPU, 메모리(memory)로 아래의 이미지를 보시면 각 영역에 대해 나태내는 값이 어디에 위치하는지 알 수 있습니다.
+![image](https://user-images.githubusercontent.com/44454495/170070022-1a0a1091-964e-4881-8cae-010135a31ced.png)
 
 
 
@@ -39,6 +40,7 @@ root#> top
 이미지의 가장 왼쪽 위를 보시면 시스템 현재 시간, OS가 살아있는 시간, 그리고 유저의 세션수가 표시되는 영역이 있습니다. 가장 먼저 보이는 숫자가 시스템의 현재 시간입니다. 이 시간은 GMT 기준으로 표시됩니다. 위 예제 기준으로 GMT 16:58:55 이라는 것입니다. 이것은 한국시간으로 보면 +9를 한 00시 58분 55초와 동일합니다. 다음으로 표시되는 것이 OS가 얼마나 살아있는지 나타냅니다. days와 시간으로 표시되며 위 예제로보면 7일과 1시 15분 동안 서버가 살아있었다는 것을 알 수 있습니다. 그리고 다음 나타나는것이 현재 접속중인 유저 세션 수입니다.
 
 좀 더 자세한 유저세션이 궁금하다면 who 명령어를 통해 알 수 있습니다.
+![image](https://user-images.githubusercontent.com/44454495/170070053-fd77ae6e-5255-49d5-aa7b-038c90d1bdbb.png)
 
 
 
@@ -58,6 +60,7 @@ root#> top
 + 대기(Waiting) - I/O operation이 끝나기를 기다리는 Process
 + 종료(Terminated) - Ctrl + Z 등의 signal로 종료된 Process
 + Zombie - Process는 root Process로 부터 뿌리내린 자식 Process 의 형식으로 트리구조를 형성합니다. 이 때 부모가 먼저 종료된 다면 root process로 부터 닿을 수 없는 Process가 생깁니다. 이를 zombie process라고 부릅니다.
+![image](https://user-images.githubusercontent.com/44454495/170070081-2b95278e-0a73-4c2c-8d34-0b1523e6a864.png)
 
 
 
@@ -92,6 +95,8 @@ buff/cache에서 buff는 buffers의 약자입니다. 이 값은 커널 버퍼에
 
 지금부터는 top 명령어의 디테일 영역에 대해서 알아보도록 하겠습니다. 디테일 영역에는 각 프로세스에 대한 상세한 내용이 나옵니다. 위 예제에서는 아래의 이미지 부분이 디테일 부분입니다. 각 요소에 대해서 하나씩 보도록하겠습니다.
 
+![image](https://user-images.githubusercontent.com/44454495/170070130-c0dd7a5a-9ddc-4760-928f-43c946d24063.png)
+
 + PID
 1) PID는 프로세스 ID이며 프로세스를 구분하기 위한 겹치지않는 고유한 값입니다.
 + USER
@@ -117,6 +122,8 @@ buff/cache에서 buff는 buffers의 약자입니다. 이 값은 커널 버퍼에
 
 top를 통해 프로세스를 모니터링하며 프로세스를 종료해야겠다고 생각할 수 있습니다. 이때 top에서는 top화면을 보며 프로세스를 종료할 수 있는 기능을 제공해주고 있습니다. 해당 기능을 사용하기 위한 커맨드는 k입니다.
 
+![image](https://user-images.githubusercontent.com/44454495/170070186-4283e67c-bcaa-4815-a726-3649c9081929.png)
+
 #### Sorting the process list
 
 디테일 영역에 대해서 원하는 값을 기준으로 정렬하는 방법을 제공합니다. 제공하는 커맨드는 아래와 같습니다. 또한 이미지는 메모리 사용량을 기준으로 정렬한 값입니다.
@@ -127,13 +134,25 @@ top를 통해 프로세스를 모니터링하며 프로세스를 종료해야겠
 + ‘T’ to sort by the running time
 + ‘R’ to sort by 오름차순과 내림차순을 토글 변경합니다.
 
+![image](https://user-images.githubusercontent.com/44454495/170070236-2d16e6c6-1ad0-4928-b6ff-e4548a389e1b.png)
+
 #### Showing a list of threads instead of processes
 
 top는 기본적으로 프로세스를 기본으로하여 정보를 보여줍니다. 하지만 H를 누르면 쓰레드(thread)를 기준으로 보여주는 방식으로 변경됩니다. 변경되는 부분은 요약의 Tasks 영역과 디테일 영역입니다.
 
+![image](https://user-images.githubusercontent.com/44454495/170070314-1bc4be9a-0833-4553-a7bf-95f08645ebe4.png)
+
 #### Filtering through processes
 
 프로세스가 너무 많다면 필터링 기능또한 제공해주고 있습니다. 해당 기능을 사용하기 위해서는 o 또는 O를 누르시면 됩니다. 필터는 COMMAND, %CPU 등등 다양한 방법으로 가능합니다.
+
+COMMAND에 JAVA가 포함되는 프로세스만 확인
+![image](https://user-images.githubusercontent.com/44454495/170070362-9c1eb6e0-5711-4465-bf32-ccceb4454ae8.png)
+
+
+%MEM값이 3% 이상인 프로세스만 확인
+![image](https://user-images.githubusercontent.com/44454495/170070434-8cf4a177-38ae-443b-ba54-b4881f6b834c.png)
+
 
 ---
 
