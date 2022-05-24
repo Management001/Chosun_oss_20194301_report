@@ -54,7 +54,7 @@ root#> top
 + 대기(Waiting) - I/O operation이 끝나기를 기다리는 Process
 + 종료(Terminated) - Ctrl + Z 등의 signal로 종료된 Process
 + Zombie - Process는 root Process로 부터 뿌리내린 자식 Process 의 형식으로 트리구조를 형성합니다. 이 때 부모가 먼저 종료된 다면 root process로 부터 닿을 수 없는 Process가 생깁니다. 이를 zombie process라고 부릅니다.
-+ 
+
 ![image](https://user-images.githubusercontent.com/44454495/170070081-2b95278e-0a73-4c2c-8d34-0b1523e6a864.png)
 
 
